@@ -1,0 +1,11 @@
+services:
+  crauto-jenkins:
+    build: .
+    image: mohamedhamdyamer/crauto-jenkins:latest
+    container_name: crauto-jenkins
+    hostname: crauto-jenkins
+    restart: on-failure
+    environment:
+      - Jenkins_URL=http://192.168.1.211:8080/
+    ports:
+      - "8080:8080"
