@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('create-sandbox') {
       steps {
-        bash '''
+        sh '''
           #!/bin/bash
           touch /tmp/create-sandbox
         '''
@@ -13,7 +13,7 @@ pipeline {
 
     stage('recover-avamar') {
       steps {
-        bash '''
+        sh '''
           #!/bin/bash
           touch /tmp/recover-avamar
         '''
@@ -22,7 +22,7 @@ pipeline {
 
     stage('add-vcenter') {
       steps {
-        bash '''
+        sh '''
           #!/bin/bash
           touch /tmp/add-vcenter
         '''
@@ -31,7 +31,7 @@ pipeline {
 
     stage('register-proxy') {
       steps {
-        bash '''
+        sh '''
           #!/bin/bash
           touch /tmp/register-proxy
         '''
@@ -40,7 +40,7 @@ pipeline {
 
     stage('recover-vms') {
       steps {
-        bash '''
+        sh '''
           #!/bin/bash
           touch /tmp/recover-vms
         '''
