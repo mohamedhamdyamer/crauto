@@ -31,7 +31,6 @@ RUN jenkins-plugin-cli --plugins mailer
 RUN jenkins-plugin-cli --plugins dark-theme
 
 # Additional Plugins
-RUN jenkins-plugin-cli --plugins docker-plugin
 RUN jenkins-plugin-cli --plugins docker-workflow
 RUN jenkins-plugin-cli --plugins ansible
 RUN jenkins-plugin-cli --plugins terraform
