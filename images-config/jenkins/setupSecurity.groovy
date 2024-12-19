@@ -1,11 +1,18 @@
 import jenkins.model.*
 import hudson.model.*
-import hudson.security.*
 import hudson.tasks.*
+import hudson.security.*
 
-def instance = Jenkins.getInstance()
+def instance = Jenkins.get()
 
-def realm = new HudsonPrivateSecurityRealm(false)
+def realm = instance.getSecurityRealm()
+
+def realmType = realm.getClass().toString()
+if (realmType == "class hudson.security.HudsonPrivateSecurityRealm") {
+    System.exit(0)
+}
+
+realm = new HudsonPrivateSecurityRealm(false)
 
 def username = "admin"
 def password = "changeme"
