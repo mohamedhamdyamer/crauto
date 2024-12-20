@@ -37,14 +37,5 @@ pipeline {
         '''
       }
     }
-
-    stage('recover-vms') {
-      steps {
-        sh '''
-          #!/bin/bash
-          touch /tmp/recover-vms
-        '''
-      }
-    }
   }
 }
