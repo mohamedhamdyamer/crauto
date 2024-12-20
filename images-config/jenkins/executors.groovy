@@ -1,4 +1,4 @@
 import jenkins.model.*
 
-def instance = Jenkins.getInstance()
+def instance = Jenkins.get()
 instance.setNumExecutors(0)
