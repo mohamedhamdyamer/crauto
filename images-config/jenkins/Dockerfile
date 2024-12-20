@@ -1,12 +1,8 @@
 FROM jenkins/jenkins:lts-jdk17
 
-# Disable the initial Setup Wizard
+# Environment variables
+## Disable the initial Setup Wizard
 ENV JAVA_OPTS=-Djenkins.install.runSetupWizard=false
-
-# Groovy scripts to run as part of the setup
-COPY --chown=jenkins:jenkins executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
-COPY --chown=jenkins:jenkins setUrl.groovy /usr/share/jenkins/ref/init.groovy.d/setUrl.groovy
-COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
 
 # Recommended Plugins
 RUN jenkins-plugin-cli --plugins cloudbees-folder
@@ -34,3 +30,8 @@ RUN jenkins-plugin-cli --plugins dark-theme
 RUN jenkins-plugin-cli --plugins docker-workflow
 RUN jenkins-plugin-cli --plugins ansible
 RUN jenkins-plugin-cli --plugins terraform
+
+# Groovy scripts to run as part of the setup
+COPY --chown=jenkins:jenkins executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+COPY --chown=jenkins:jenkins setUrl.groovy /usr/share/jenkins/ref/init.groovy.d/setUrl.groovy
+COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
