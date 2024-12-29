@@ -36,3 +36,4 @@ COPY --chown=jenkins:jenkins setUrl.groovy /usr/share/jenkins/ref/init.groovy.d/
 COPY --chown=jenkins:jenkins executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
 COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
 COPY --chown=jenkins:jenkins setupCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/setupCredentials.groovy
+COPY --chown=jenkins:jenkins createPipeline.groovy COPY/usr/share/jenkins/ref/init.groovy.d/createPipeline.groovy
