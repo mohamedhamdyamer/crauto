@@ -33,6 +33,7 @@ if (!pipeline) {
     def scriptPath = "pipelines/Jenkinsfile-app"
     def projectFactory = new WorkflowBranchProjectFactory()
     projectFactory.setScriptPath(scriptPath)
+    projectFactory.save()
     pipeline.setProjectFactory(projectFactory)
 
     jenkins.add(pipeline, pipelineName)
