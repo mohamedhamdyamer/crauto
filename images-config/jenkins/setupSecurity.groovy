@@ -3,9 +3,9 @@ import hudson.model.*
 import hudson.tasks.*
 import hudson.security.*
 
-def instance = Jenkins.get()
+def jenkins = Jenkins.get()
 
-def realm = instance.getSecurityRealm()
+def realm = jenkins.getSecurityRealm()
 def realmType = realm.getClass().toString()
 
 if (realmType != "class hudson.security.HudsonPrivateSecurityRealm") {
@@ -22,11 +22,11 @@ if (realmType != "class hudson.security.HudsonPrivateSecurityRealm") {
     user.setDescription(userDescription)
     user.addProperty(new Mailer.UserProperty(userEmail))
 
-    instance.setSecurityRealm(realm)
+    jenkins.setSecurityRealm(realm)
 
     def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
     strategy.setAllowAnonymousRead(false)
-    instance.setAuthorizationStrategy(strategy)
+    jenkins.setAuthorizationStrategy(strategy)
 
-    instance.save()
+    jenkins.save()
 }
