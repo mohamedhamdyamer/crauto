@@ -12,8 +12,7 @@ def creds = credsInstance.getCredentials()
 def githubCredsFound = false
 
 for (c in creds) {
-    def credsID = c.getId()
-    if (credsID == "github-creds") {
+    if (c.getId() == "github-creds") {
         githubCredsFound = true
     }
 }
@@ -28,6 +27,6 @@ if (!githubCredsFound) {
     def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
     def newCreds = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, newCredsID, newCredsDescription, newCredsUsername, newCredsPassword)
     store.addCredentials(domain, newCreds)
-}
 
-jenkins.save()
+    jenkins.save()
+}
