@@ -3,15 +3,15 @@ import jenkins.branch.*
 import org.jenkinsci.plugins.workflow.multibranch.*
 import org.jenkinsci.plugins.github_branch_source.*
 
-def jenkinsInstance = Jenkins.get()
+def jenkins = Jenkins.get()
 
-def pipeline = jenkinsInstance.getItemByFullName("CR - Automate Recovery")
+def pipeline = jenkins.getItemByFullName("CR - Automate Recovery")
 
 if (!pipeline) {
 
     def pipelineName = "CR - Automate Recovery"
     def pipelineDescription = "Cyber Recovery - Automating the recovery of Apps!"
-    pipeline = new WorkflowMultiBranchProject(jenkinsInstance, pipelineName)
+    pipeline = new WorkflowMultiBranchProject(jenkins, pipelineName)
     pipeline.setDisplayName(pipelineName)
     pipeline.setDescription(pipelineDescription)
 
@@ -20,9 +20,9 @@ if (!pipeline) {
     def repo = new GitHubSCMSource("", "", repoURL, true)
     repo.setCredentialsId(repoCredsID)
 
-    def trait = new BranchDiscoveryTrait(0)
+    def repoTrait = new BranchDiscoveryTrait(BranchDiscoveryTrait.ALL_BRANCHES)
     def traitsList = new ArrayList()
-    traitsList.add(trait)
+    traitsList.add(repoTrait)
     repo.setTraits(traitsList)
 
     def branchSource = new BranchSource(repo)
@@ -35,6 +35,6 @@ if (!pipeline) {
     projectFactory.setScriptPath(scriptPath)
     pipeline.setProjectFactory(projectFactory)
 
-    jenkinsInstance.add(pipeline, pipelineName)
-    jenkinsInstance.save()
+    jenkins.add(pipeline, pipelineName)
+    jenkins.save()
 }
