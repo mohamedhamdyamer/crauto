@@ -35,6 +35,7 @@ if (!pipeline) {
     projectFactory.setScriptPath(scriptPath)
     projectFactory.save()
     pipeline.setProjectFactory(projectFactory)
+    pipeline.save()
 
     jenkins.add(pipeline, pipelineName)
     jenkins.save()
