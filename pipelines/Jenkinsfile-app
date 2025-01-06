@@ -1,5 +1,7 @@
 pipeline {
-  agent any
+  agent {
+    label 'crauto-dockerized-jenkins-agent'
+  }
 
   stages {
     stage('create-sandbox') {
