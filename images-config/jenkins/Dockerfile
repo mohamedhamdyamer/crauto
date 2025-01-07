@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts-jdk17
+FROM jenkins/jenkins:latest-jdk17
 
 # Environment variables
 ## Disable the initial Setup Wizard
@@ -27,6 +27,7 @@ RUN jenkins-plugin-cli --plugins mailer
 RUN jenkins-plugin-cli --plugins dark-theme
 
 # Additional Plugins
+RUN jenkins-plugin-cli --plugins docker-plugin
 RUN jenkins-plugin-cli --plugins docker-workflow
 RUN jenkins-plugin-cli --plugins ansible
 RUN jenkins-plugin-cli --plugins terraform
@@ -35,5 +36,6 @@ RUN jenkins-plugin-cli --plugins terraform
 COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
 COPY --chown=jenkins:jenkins setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
 COPY --chown=jenkins:jenkins setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
+COPY --chown=jenkins:jenkins setupCloud.groovy /usr/share/jenkins/ref/init.groovy.d/setupCloud.groovy
 COPY --chown=jenkins:jenkins createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
 COPY --chown=jenkins:jenkins createPipeline.groovy /usr/share/jenkins/ref/init.groovy.d/createPipeline.groovy
