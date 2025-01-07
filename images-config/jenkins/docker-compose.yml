@@ -6,7 +6,10 @@ services:
     hostname: crauto-jenkins
     restart: on-failure
     environment:
+      - Repo_URL=https://github.com/mohamedhamdyamer/crauto
+      - Docker_Host_URI=tcp://192.168.1.211:2375
       - Jenkins_URL=http://192.168.1.211:8080/
+      - Dockerized_Jenkins_Agent_Image=jenkins/inbound-agent:latest-jdk17
     ports:
       - "8080:8080"
       - "50000:50000"

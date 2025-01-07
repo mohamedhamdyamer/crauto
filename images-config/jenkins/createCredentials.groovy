@@ -3,6 +3,11 @@ import com.cloudbees.plugins.credentials.*
 import com.cloudbees.plugins.credentials.domains.*
 import com.cloudbees.plugins.credentials.impl.*
 
+def newCredsID = "github-creds"
+def newCredsDescription = "GitHub Credentials"
+def newCredsUsername = ""
+def newCredsPassword = ""
+
 def jenkins = Jenkins.get()
 
 def credsInstance = SystemCredentialsProvider.getInstance()
@@ -18,11 +23,6 @@ for (c in creds) {
 }
 
 if (!githubCredsFound) {
-    def newCredsID = "github-creds"
-    def newCredsDescription = "GitHub Credentials"
-    def newCredsUsername = ""
-    def newCredsPassword = ""
-
     def domain = Domain.global()
     def store = jenkins.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0].getStore()
     def newCreds = new UsernamePasswordCredentialsImpl(CredentialsScope.GLOBAL, newCredsID, newCredsDescription, newCredsUsername, newCredsPassword)

@@ -5,8 +5,8 @@ import org.jenkinsci.plugins.docker.commons.credentials.*
 import com.nirima.jenkins.plugins.docker.*
 
 def dockerCloudName = "crauto-docker-host"
-def dockerHostUri = "tcp://192.168.1.211:2375"
-def imageName = "jenkins/inbound-agent:latest-jdk17"
+def dockerHostUri = System.getenv('Docker_Host_URI')
+def imageName = System.getenv('Dockerized_Jenkins_Agent_Image')
 def dockerTemplateName = "crauto-dockerized-jenkins-agent"
 
 def jenkins = Jenkins.get()
