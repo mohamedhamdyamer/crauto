@@ -1,6 +1,12 @@
+env.DOCKER_HOST = 'tcp://192.168.1.211:2375'
+
 pipeline {
   agent {
-    label 'crauto-dockerized-jenkins-agent'
+    docker {
+      label 'crauto-jenkins-agent-cicd-docker'
+      image 'ubuntu:22.04'
+      args '--volume jenkins_agent_home:/root'
+    }
   }
 
   stages {
@@ -8,7 +14,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch /tmp/create-sandbox
+          touch /home/jenkins/create-sandbox
         '''
       }
     }
@@ -17,7 +23,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch /tmp/recover-avamar
+          touch /home/jenkins/recover-avamar
         '''
       }
     }
@@ -26,7 +32,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch /tmp/add-vcenter
+          touch /home/jenkins/add-vcenter
         '''
       }
     }
@@ -35,7 +41,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch /tmp/register-proxy
+          touch /home/jenkins/register-proxy
         '''
       }
     }
