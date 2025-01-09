@@ -1,0 +1,43 @@
+pipeline {
+  agent {
+    label 'crauto-dockerized-jenkins-agent'
+  }
+
+  stages {
+    stage('create-sandbox') {
+      steps {
+        sh '''
+          #!/bin/bash
+          touch /tmp/create-sandbox
+        '''
+      }
+    }
+
+    stage('recover-avamar') {
+      steps {
+        sh '''
+          #!/bin/bash
+          touch /tmp/recover-avamar
+        '''
+      }
+    }
+
+    stage('add-vcenter') {
+      steps {
+        sh '''
+          #!/bin/bash
+          touch /tmp/add-vcenter
+        '''
+      }
+    }
+
+    stage('register-proxy') {
+      steps {
+        sh '''
+          #!/bin/bash
+          touch /tmp/register-proxy
+        '''
+      }
+    }
+  }
+}
