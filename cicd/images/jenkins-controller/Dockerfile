@@ -33,7 +33,7 @@ RUN jenkins-plugin-cli --plugins ansible
 RUN jenkins-plugin-cli --plugins terraform
 
 # Groovy scripts to run as part of the setup
-COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
-COPY --chown=jenkins:jenkins setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
-COPY --chown=jenkins:jenkins setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
-COPY --chown=jenkins:jenkins createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
+COPY --chown=jenkins:jenkins groovy/setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
+COPY --chown=jenkins:jenkins groovy/setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
+COPY --chown=jenkins:jenkins groovy/setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
+COPY --chown=jenkins:jenkins groovy/createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy

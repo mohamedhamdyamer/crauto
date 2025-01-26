@@ -1,0 +1,14 @@
+services:
+  crauto-cicd-jenkins-controller:
+    build:
+      context: ../../..
+      dockerfile: cicd/images/cicd-jenkins-controller/Dockerfile
+    image: mohamedhamdyamer/crauto-cicd-jenkins-controller:latest
+    container_name: crauto-cicd-jenkins-controller
+    hostname: crauto-cicd-jenkins-controller
+    restart: on-failure
+    environment:
+      - Jenkins_URL=http://192.168.1.214:8080/
+    ports:
+      - "8080:8080"
+      - "50000:50000"

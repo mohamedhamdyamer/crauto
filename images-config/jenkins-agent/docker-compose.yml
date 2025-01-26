@@ -1,4 +1,0 @@
-services:
-  crauto-jenkins-agent:
-    build: .
-    image: mohamedhamdyamer/crauto-jenkins-agent:latest
