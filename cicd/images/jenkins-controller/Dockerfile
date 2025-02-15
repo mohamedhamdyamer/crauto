@@ -17,6 +17,7 @@ RUN jenkins-plugin-cli --plugins workflow-aggregator
 RUN jenkins-plugin-cli --plugins github-branch-source
 RUN jenkins-plugin-cli --plugins pipeline-github-lib
 RUN jenkins-plugin-cli --plugins pipeline-graph-view
+RUN jenkins-plugin-cli --plugins pipeline-utility-steps
 RUN jenkins-plugin-cli --plugins git
 RUN jenkins-plugin-cli --plugins ssh-slaves
 RUN jenkins-plugin-cli --plugins matrix-auth

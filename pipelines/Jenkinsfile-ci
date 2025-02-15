@@ -1,47 +1,53 @@
-env.DOCKER_HOST = 'tcp://192.168.1.211:2375'
-
 pipeline {
   agent {
-    docker {
-      label 'crauto-jenkins-agent-cicd-docker'
-      image 'ubuntu:22.04'
-      args '--volume jenkins_agent_home:/root'
+    dockerfile {
+      label 'crauto-cicd'
+      dir 'cicd/images/jenkins-agent'
     }
   }
 
   stages {
-    stage('create-sandbox') {
+    stage('displaying info ...') {
+      steps {
+        script {
+          def galaxyFile = readYaml(file: 'app/ansible/galaxy.yml')
+          def version = ""
+          galaxyFile.each {
+            key, value ->
+              if (key == "version") {
+                version = value
+              }
+          }
+          println("Version: " + version)
+          println("Build: ${BUILD_NUMBER}")
+          println("Full version: " + version + ".Build.${BUILD_NUMBER}")
+        }
+      }
+    }
+
+    stage('linting ...') {
       steps {
         sh '''
           #!/bin/bash
-          touch /home/jenkins/create-sandbox
+          touch recover-avamar
         '''
       }
     }
 
-    stage('recover-avamar') {
+    stage('testing ...') {
       steps {
         sh '''
           #!/bin/bash
-          touch /home/jenkins/recover-avamar
+          touch add-vcenter
         '''
       }
     }
 
-    stage('add-vcenter') {
+    stage('building ...') {
       steps {
         sh '''
           #!/bin/bash
-          touch /home/jenkins/add-vcenter
-        '''
-      }
-    }
-
-    stage('register-proxy') {
-      steps {
-        sh '''
-          #!/bin/bash
-          touch /home/jenkins/register-proxy
+          touch register-proxy
         '''
       }
     }
