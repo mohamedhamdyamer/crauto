@@ -2,7 +2,7 @@ services:
   crauto-cicd-jenkins-controller:
     build:
       context: ../../..
-      dockerfile: cicd/images/cicd-jenkins-controller/Dockerfile
+      dockerfile: cicd/images/jenkins-controller/Dockerfile
     image: mohamedhamdyamer/crauto-cicd-jenkins-controller:latest
     container_name: crauto-cicd-jenkins-controller
     hostname: crauto-cicd-jenkins-controller
