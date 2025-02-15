@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'crauto-dockerized-jenkins-agent'
+    label 'dockerized-jenkins-agent'
   }
 
   stages {

@@ -1,31 +1,4 @@
 services:
-  crauto-app-jenkins-controller:
-    build: .
-    image: mohamedhamdyamer/crauto-app-jenkins-controller:latest
-    container_name: crauto-app-jenkins-controller
-    hostname: crauto-app-jenkins-controller
-    restart: on-failure
-    environment:
-      - Repo_URL=https://github.com/mohamedhamdyamer/crauto
-      - Docker_Host_URI=tcp://192.168.1.211:2375
-      - Jenkins_URL=http://192.168.1.211:8080/
-      - Dockerized_Jenkins_Agent_Image_Name=mohamedhamdyamer/crauto-jenkins-agent:latest
-    ports:
-      - "8080:8080"
-      - "50000:50000"
   crauto-app-jenkins-agent:
     build: .
     image: mohamedhamdyamer/crauto-app-jenkins-agent:latest
-  crauto-cicd-jenkins-controller:
-    build:
-      context: .
-      dockerfile: cicd-jenkins-controller/Dockerfile
-    image: mohamedhamdyamer/crauto-cicd-jenkins-controller:latest
-    container_name: crauto-cicd-jenkins-controller
-    hostname: crauto-cicd-jenkins-controller
-    restart: on-failure
-    environment:
-      - Jenkins_URL=http://192.168.1.214:8081/
-    ports:
-      - "8081:8080"
-      - "50001:50000"
