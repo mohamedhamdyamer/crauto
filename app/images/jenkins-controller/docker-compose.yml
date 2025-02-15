@@ -1,3 +1,4 @@
+---
 services:
   crauto-app-jenkins-controller:
     build:

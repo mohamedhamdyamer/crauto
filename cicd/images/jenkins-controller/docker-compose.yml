@@ -1,3 +1,4 @@
+---
 services:
   crauto-cicd-jenkins-controller:
     build:

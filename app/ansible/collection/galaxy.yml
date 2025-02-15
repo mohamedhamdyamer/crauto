@@ -1,0 +1,12 @@
+---
+namespace: crauto
+name: crauto
+description: CR - Automating the recovery of Apps!
+repository: https://github.com/mohamedhamdyamer/crauto
+version: 1.0.1
+readme: README.md
+authors:
+  - Mohamed H. Amer (mohamed.hamdy.amer@gmail.com)
+tags:
+  - application
+  - infrastructure

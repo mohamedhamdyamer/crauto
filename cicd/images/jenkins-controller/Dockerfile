@@ -38,3 +38,7 @@ COPY --chown=jenkins:jenkins common/groovy/setupSecurity.groovy /usr/share/jenki
 COPY --chown=jenkins:jenkins common/groovy/setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
 COPY --chown=jenkins:jenkins common/groovy/setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
 COPY --chown=jenkins:jenkins common/groovy/createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
+
+USER jenkins
+
+HEALTHCHECK NONE

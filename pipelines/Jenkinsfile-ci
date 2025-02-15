@@ -3,6 +3,7 @@ pipeline {
     dockerfile {
       label 'crauto-cicd'
       dir 'cicd/images/jenkins-agent'
+      args '--volume /home/amer/artifactory:/tmp/artifactory'
     }
   }
 
@@ -10,7 +11,7 @@ pipeline {
     stage('displaying info ...') {
       steps {
         script {
-          def galaxyFile = readYaml(file: 'app/ansible/galaxy.yml')
+          def galaxyFile = readYaml(file: 'app/ansible/collection/galaxy.yml')
           def version = ""
           galaxyFile.each {
             key, value ->
@@ -29,7 +30,19 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch recover-avamar
+          /root/.local/bin/checkov --file cicd/images/jenkins-controller/Dockerfile --framework dockerfile
+          /root/.local/bin/checkov --file cicd/images/jenkins-agent/Dockerfile --framework dockerfile
+
+          /root/.local/bin/checkov --file app/images/jenkins-controller/Dockerfile --framework dockerfile
+          /root/.local/bin/checkov --file app/images/jenkins-agent/Dockerfile --framework dockerfile
+
+          yamllint app/images/jenkins-agent/docker-compose.yml
+          yamllint app/images/jenkins-controller/docker-compose.yml
+          yamllint cicd/images/jenkins-controller/docker-compose.yml
+
+          ansible-lint app/ansible/collection/galaxy.yml
+          ansible-lint app/ansible/inventory/hosts.yml
+          ansible-lint app/ansible/collection/test.yml
         '''
       }
     }
@@ -38,17 +51,31 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch add-vcenter
+          ansible-playbook --inventory app/ansible/inventory/hosts.yml app/ansible/collection/test.yml
         '''
       }
     }
 
-    stage('building ...') {
+    stage('building the Ansible collection ...') {
       steps {
-        sh '''
-          #!/bin/bash
-          touch register-proxy
-        '''
+        dir('app/ansible/collection') {
+          sh '''
+            #!/bin/bash
+            rm -f *.tar.gz
+            ansible-galaxy collection build
+            mv *.tar.gz /tmp/artifactory/crauto/ansible/collections
+          '''
+        }
+      }
+    }
+
+    stage('building the Docker images ...') {
+      agent {
+        node {
+          docker.build("mohamedhamdyamer/crauto-app-jenkins-agent:latest", "app/images/jenkins-agent")
+        }
+      }
+      steps {
       }
     }
   }

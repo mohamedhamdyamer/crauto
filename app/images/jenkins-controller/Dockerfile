@@ -39,3 +39,7 @@ COPY --chown=jenkins:jenkins common/groovy/setNumExecutors.groovy /usr/share/jen
 COPY --chown=jenkins:jenkins common/groovy/setupCloud.groovy /usr/share/jenkins/ref/init.groovy.d/setupCloud.groovy
 COPY --chown=jenkins:jenkins common/groovy/createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
 COPY --chown=jenkins:jenkins common/groovy/createPipeline.groovy /usr/share/jenkins/ref/init.groovy.d/createPipeline.groovy
+
+USER jenkins
+
+HEALTHCHECK NONE

@@ -23,3 +23,5 @@ RUN apt-get install --assume-yes ansible
 
 # Switching back to user "jenkins" ...
 USER jenkins
+
+HEALTHCHECK NONE

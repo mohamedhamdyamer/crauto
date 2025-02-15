@@ -1,0 +1,9 @@
+---
+- name: Testing with a simple Ansible playbook ...
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Printing a test message ...
+      ansible.builtin.debug:
+        msg: "This is a test message! ..."
