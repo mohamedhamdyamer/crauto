@@ -33,12 +33,12 @@ RUN jenkins-plugin-cli --plugins ansible
 RUN jenkins-plugin-cli --plugins terraform
 
 # Groovy scripts to run as part of the setup
-COPY --chown=jenkins:jenkins common/groovy/setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
-COPY --chown=jenkins:jenkins common/groovy/setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
-COPY --chown=jenkins:jenkins common/groovy/setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
-COPY --chown=jenkins:jenkins common/groovy/setupCloud.groovy /usr/share/jenkins/ref/init.groovy.d/setupCloud.groovy
-COPY --chown=jenkins:jenkins common/groovy/createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
-COPY --chown=jenkins:jenkins common/groovy/createPipeline.groovy /usr/share/jenkins/ref/init.groovy.d/createPipeline.groovy
+COPY --chown=jenkins:jenkins setupSecurity.groovy /usr/share/jenkins/ref/init.groovy.d/setupSecurity.groovy
+COPY --chown=jenkins:jenkins setURL.groovy /usr/share/jenkins/ref/init.groovy.d/setURL.groovy
+COPY --chown=jenkins:jenkins setNumExecutors.groovy /usr/share/jenkins/ref/init.groovy.d/setNumExecutors.groovy
+COPY --chown=jenkins:jenkins setupCloud.groovy /usr/share/jenkins/ref/init.groovy.d/setupCloud.groovy
+COPY --chown=jenkins:jenkins createCredentials.groovy /usr/share/jenkins/ref/init.groovy.d/createCredentials.groovy
+COPY --chown=jenkins:jenkins createPipeline.groovy /usr/share/jenkins/ref/init.groovy.d/createPipeline.groovy
 
 USER jenkins
 

@@ -69,14 +69,37 @@ pipeline {
       }
     }
 
-    stage('building the Docker images ...') {
-      agent {
-        node {
-          docker.build("mohamedhamdyamer/crauto-app-jenkins-agent:latest", "app/images/jenkins-agent")
-        }
-      }
+    stage('copying groovy files ...') {
       steps {
+        sh '''
+          cp common/groovy/* app/images/jenkins-controller
+        '''
       }
+    }
+  }
+}
+
+node('crauto-cicd') {
+
+  def appImageController
+  def appImageAgent
+
+  stage('cloning the repo ...') {
+    checkout scm
+  }
+
+  stage('building the Docker images ...') {
+    appImageController = docker.build("mohamedhamdyamer/crauto-app-jenkins-controller:latest", "app/images/jenkins-controller")
+    appImageAgent = docker.build("mohamedhamdyamer/crauto-app-jenkins-agent:latest", "app/images/jenkins-agent")
+  }
+
+  stage('pusshing the images ...') {
+    withCredentials([string(credentialsId: 'amer-docker-hub-password', variable: 'dockerHubPassword')]) {
+      sh '''
+        docker login --username mohamedhamdyamer --password ${dockerHubPassword}
+      '''
+      appImageController.push()
+      appImageAgent.push()
     }
   }
 }
