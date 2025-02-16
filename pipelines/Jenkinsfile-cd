@@ -1,0 +1,77 @@
+pipeline {
+  agent {
+    dockerfile {
+      label 'crauto-cicd'
+      dir 'cicd/images/jenkins-agent'
+      args '--volume /home/amer/artifactory:/tmp/artifactory --volume /home/amer/deployments:/tmp/deployments'
+    }
+  }
+
+  stages {
+    stage('displaying info ...') {
+      steps {
+        script {
+          def galaxyFile = readYaml(file: 'app/ansible/collection/galaxy.yml')
+          def version = ""
+          galaxyFile.each {
+            key, value ->
+              if (key == "version") {
+                version = value
+              }
+          }
+          println("Continuous Delivery - CD")
+          println("Version: " + version)
+          println("Build: ${BUILD_NUMBER}")
+          println("Full version: " + version + ".Build.${BUILD_NUMBER}")
+        }
+      }
+    }
+
+    stage('preparing the deployment directory ...') {
+      steps {
+        dir('/tmp/deployments') {
+          sh '''
+            #!/bin/bash
+            mkdir crauto.Build.$BUILD_NUMBER
+          '''
+        }
+      }
+    }
+
+    stage('deploying the Ansible collection ...') {
+      steps {
+        dir('/tmp/artifactory/crauto/ansible/collections') {
+          sh '''
+            #!/bin/bash
+            cp *.tar.gz /tmp/deployments/crauto.Build.$BUILD_NUMBER
+          '''
+        }
+      }
+    }
+  }
+}
+
+// node('crauto-cicd') {
+
+//   def appImageController
+//   def appImageAgent
+
+//   stage('cloning the repo ...') {
+//     checkout scm
+//   }
+
+//   stage('building the Docker images ...') {
+//     appImageController = docker.build("mohamedhamdyamer/crauto-app-jenkins-controller:latest", "app/images/jenkins-controller")
+//     appImageAgent = docker.build("mohamedhamdyamer/crauto-app-jenkins-agent:latest", "app/images/jenkins-agent")
+//   }
+
+//   stage('pusshing the images ...') {
+//     withCredentials([string(credentialsId: 'amer-docker-hub-password', variable: 'dockerHubPassword')]) {
+//       sh '''
+//         docker login --username mohamedhamdyamer --password ${dockerHubPassword}
+//       '''
+//       appImageController.push()
+//       appImageAgent.push()
+//     }
+//   }
+// }

@@ -19,6 +19,7 @@ pipeline {
                 version = value
               }
           }
+          println("Continuous Integration - CI")
           println("Version: " + version)
           println("Build: ${BUILD_NUMBER}")
           println("Full version: " + version + ".Build.${BUILD_NUMBER}")
