@@ -64,9 +64,14 @@ pipeline {
             #!/bin/bash
             rm -f *.tar.gz
             ansible-galaxy collection build
-            mv *.tar.gz /tmp/artifactory/crauto/ansible/collections
           '''
         }
+
+        sh '''
+          cp app/ansible/collection/galaxy.yml app/images/jenkins-agent
+          cp app/ansible/collection/*.tar.gz app/images/jenkins-agent
+          mv app/ansible/collection/*.tar.gz /tmp/artifactory/crauto/ansible/collections
+        '''
       }
     }
 
@@ -100,7 +105,7 @@ node('crauto-cicd') {
         docker login --username mohamedhamdyamer --password ${dockerHubPassword}
       '''
       appImageController.push()
-      appImageAgent.push()
+      //appImageAgent.push()
     }
   }
 }

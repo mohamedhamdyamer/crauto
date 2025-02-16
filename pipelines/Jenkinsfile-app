@@ -4,6 +4,14 @@ pipeline {
   }
 
   stages {
+    stage('displaying info ...') {
+      steps {
+        sh '''
+          ansible-playbook crauto.crauto.test
+        '''
+      }
+    }
+
     stage('create-sandbox') {
       steps {
         sh '''
