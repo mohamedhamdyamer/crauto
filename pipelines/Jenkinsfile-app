@@ -7,7 +7,8 @@ pipeline {
     stage('displaying info ...') {
       steps {
         sh '''
-          ansible-playbook crauto.crauto.test
+         ls -ltr /home/jenkins/.ansible/collections/ansible_collections/crauto/crauto
+         ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/.ansible/collections/ansible_collections/crauto/crauto/test.yml
         '''
       }
     }

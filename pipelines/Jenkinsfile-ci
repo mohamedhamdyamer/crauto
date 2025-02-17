@@ -105,7 +105,7 @@ node('crauto-cicd') {
         docker login --username mohamedhamdyamer --password ${dockerHubPassword}
       '''
       appImageController.push()
-      //appImageAgent.push()
+      appImageAgent.push()
     }
   }
 }

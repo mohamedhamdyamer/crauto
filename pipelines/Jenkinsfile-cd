@@ -58,7 +58,7 @@ node('crauto-cicd') {
       sh '''
         docker login --username mohamedhamdyamer --password ${dockerHubPassword}
         docker pull mohamedhamdyamer/crauto-app-jenkins-controller
-        #docker pull mohamedhamdyamer/crauto-app-jenkins-agent
+        docker pull mohamedhamdyamer/crauto-app-jenkins-agent
       '''
     }
   }
