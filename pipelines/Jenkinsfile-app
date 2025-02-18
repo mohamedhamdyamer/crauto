@@ -8,7 +8,7 @@ pipeline {
       steps {
         sh '''
          ls -ltr /home/jenkins/.ansible/collections/ansible_collections/crauto/crauto
-         ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/.ansible/collections/ansible_collections/crauto/crauto/test.yml
+         ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
         '''
       }
     }
