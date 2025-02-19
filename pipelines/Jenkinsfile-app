@@ -18,8 +18,7 @@ pipeline {
         sh '''
           #!/bin/bash
           cd /home/jenkins/crauto_mount/crs_main
-          #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
-          ansible-playbook --inventory inventoryFile cyber_recovery_cleanup.yml
+          ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
         '''
       }
     }
@@ -28,7 +27,8 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          touch /tmp/recover-avamar
+          cd /home/jenkins/crauto_mount/restore_rollback_avamar
+          ansible-playbook --inventory inventoryFile pre_restore_tasks.yml
         '''
       }
     }
