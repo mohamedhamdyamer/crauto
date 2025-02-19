@@ -11,7 +11,7 @@ pipeline {
           mkdir /home/jenkins/.ssh
           echo "Host *" >> /home/jenkins/.ssh/config
           echo "StrictHostKeyChecking no" >> /home/jenkins/.ssh/config
-          ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
+          ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/workspace/crauto_mount/test01.yml
         '''
       }
     }
@@ -20,7 +20,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          cd /home/jenkins/crauto_mount/crs_main
+          cd /home/jenkins/workspace/crauto_mount/crs_main
           #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
         '''
       }
@@ -30,14 +30,8 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          whoami
-          id
-          sudo su -
-          #whoami
-          #id
-          #pwd
-          #cd /home/jenkins/crauto_mount/restore_rollback_avamar
-          #ansible-playbook --inventory inventoryFile restore_ave.yml
+          cd /home/jenkins/workspace/crauto_mount/restore_rollback_avamar
+          ansible-playbook --inventory inventoryFile restore_ave.yml
         '''
       }
     }
