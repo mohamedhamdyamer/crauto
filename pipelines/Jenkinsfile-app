@@ -7,8 +7,9 @@ pipeline {
     stage('displaying info ...') {
       steps {
         sh '''
-         #!/bin/bash
-         ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
+          #!/bin/bash
+          echo "10.60.40.117 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOxwNG9wN8DBeLSOlzOxcWM4ffhMMcJlvyJ+WEZ8zop7E6bks36BpF2MBCJ+c4vL0RrHKBVw4gRArfaWJp7hscU=" /home/jenkins/.ssh/known_hosts
+          ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
         '''
       }
     }
