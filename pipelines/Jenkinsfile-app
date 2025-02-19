@@ -10,7 +10,7 @@ pipeline {
           #!/bin/bash
           #echo "10.60.40.117 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOxwNG9wN8DBeLSOlzOxcWM4ffhMMcJlvyJ+WEZ8zop7E6bks36BpF2MBCJ+c4vL0RrHKBVw4gRArfaWJp7hscU=" /home/jenkins/.ssh/known_hosts
           #ssh -o StrictHostKeyChecking=no admin/CTCvmware1_2_3@10.60.40.117
-          pwd
+          mkdir /home/jenkins/.ssh
           echo "Host *" >> /home/jenkins/.ssh/config
           echo "StrictHostKeyChecking no" >> /home/jenkins/.ssh/config
           ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
@@ -22,7 +22,6 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
-          mkdir /home/jenkins/.ssh
           cd /home/jenkins/crauto_mount/crs_main
           #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
         '''
