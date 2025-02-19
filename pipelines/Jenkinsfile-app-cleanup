@@ -1,0 +1,35 @@
+pipeline {
+  agent {
+    label 'dockerized-jenkins-agent'
+  }
+
+  stages {
+    stage('displaying info ...') {
+      steps {
+        sh '''
+         #!/bin/bash
+         ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
+        '''
+      }
+    }
+
+    stage('cleanup-sandbox') {
+      steps {
+        sh '''
+          #!/bin/bash
+          cd /home/jenkins/crauto_mount/crs_main
+          ansible-playbook --inventory inventoryFile cyber_recovery_cleanup.yml
+        '''
+      }
+    }
+
+    stage('cleanup-avamar') {
+      steps {
+        sh '''
+          #!/bin/bash
+          touch /tmp/cleanup-avamar
+        '''
+      }
+    }
+  }
+}
