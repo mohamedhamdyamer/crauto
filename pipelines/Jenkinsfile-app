@@ -21,6 +21,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
+          mkdir /home/jenkins/.ssh
           cd /home/jenkins/crauto_mount/crs_main
           #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
         '''
