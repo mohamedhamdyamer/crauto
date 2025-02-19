@@ -33,10 +33,10 @@ pipeline {
           whoami
           id
           sudo su -
-          whoami
-          id
-          pwd
-          cd /home/jenkins/crauto_mount/restore_rollback_avamar
+          #whoami
+          #id
+          #pwd
+          #cd /home/jenkins/crauto_mount/restore_rollback_avamar
           #ansible-playbook --inventory inventoryFile restore_ave.yml
         '''
       }
