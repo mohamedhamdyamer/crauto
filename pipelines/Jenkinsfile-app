@@ -21,7 +21,7 @@ pipeline {
         sh '''
           #!/bin/bash
           cd /home/jenkins/crauto_mount/crs_main
-          #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
+          ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
         '''
       }
     }
@@ -32,24 +32,6 @@ pipeline {
           #!/bin/bash
           cd /home/jenkins/crauto_mount/restore_rollback_avamar
           ansible-playbook --inventory inventoryFile restore_ave.yml
-        '''
-      }
-    }
-
-    stage('add-vcenter') {
-      steps {
-        sh '''
-          #!/bin/bash
-          touch /tmp/add-vcenter
-        '''
-      }
-    }
-
-    stage('register-proxy') {
-      steps {
-        sh '''
-          #!/bin/bash
-          touch /tmp/register-proxy
         '''
       }
     }
