@@ -30,8 +30,10 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
+          whoami
+          id
           cd /home/jenkins/crauto_mount/restore_rollback_avamar
-          ansible-playbook --inventory inventoryFile restore_ave.yml
+          #ansible-playbook --inventory inventoryFile restore_ave.yml
         '''
       }
     }
