@@ -40,6 +40,7 @@ pipeline {
         dir('/home/jenkins/crauto_mount/restore_rollback_avamar'){
           sh '''
             #!/bin/bash
+            ansible-playbook --inventory inventoryFile pre_restore_tasks.yml
             #ansible-playbook --inventory inventoryFile restore_ave.yml
           '''
         }
