@@ -63,38 +63,19 @@ node('crauto-cicd') {
     }
   }
 
-  stage('creating the required files to start the container ...') {
+  // In this stage, we will need to update the environment variables of app/images/jenkins-controller/docker-compose.yml.
+  // The values, to update, are dependent on the environemt we deploy the app on (the docker host we are deplying the container to run on).
+  stage('updating the environment variables of app/images/jenkins-controller/docker-compose.yml ...') {
     sh '''
-      echo FROM mohamedhamdyamer/crauto-app-jenkins-controller:latest > /home/amer/deployments/crauto/Dockerfile
-      echo USER jenkins >> /home/amer/deployments/crauto/Dockerfile
-      echo HEALTHCHECK NONE >> /home/amer/deployments/crauto/Dockerfile
-
-      echo "---" > /home/amer/deployments/crauto/docker-compose.yml
-      echo "services:" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "  crauto-app-jenkins-controller:" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    build:" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      context: ." >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      dockerfile: Dockerfile" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    image: mohamedhamdyamer/crauto-app-jenkins-controller:latest" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    container_name: crauto-app-jenkins-controller" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    hostname: crauto-app-jenkins-controller" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    restart: on-failure" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    environment:" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - Jenkins_URL=http://192.168.1.214:8081/" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - Docker_Host_URI=tcp://192.168.1.214:2375" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - Dockerized_Jenkins_Agent_Image_Name=mohamedhamdyamer/crauto-app-jenkins-agent:latest" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - Repo_URL=https://github.com/mohamedhamdyamer/crauto" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "    ports:" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - 8081:8080" >> /home/amer/deployments/crauto/docker-compose.yml
-      echo "      - 50001:50000" >> /home/amer/deployments/crauto/docker-compose.yml
+      sed -i 's/Jenkins_URL=/Jenkins_URL=http://192.168.1.214:8080/g' app/images/jenkins-controller/docker-compose.yml
+      sed -i 's/Docker_Host_URI=/Docker_Host_URI=tcp://192.168.1.214:2375/g' app/images/jenkins-controller/docker-compose.yml
     '''
   }
 
   stage('building and running the ') {
-    dir("/home/amer/deployments/crauto") {
+    dir("app/images/jenkins-controller") {
       sh '''
         docker compose down
-        docker compose build
         docker compose up --detach
       '''
     }

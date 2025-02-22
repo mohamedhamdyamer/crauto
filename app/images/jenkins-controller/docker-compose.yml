@@ -2,15 +2,15 @@
 services:
   crauto-app-jenkins-controller:
     build:
-      context: ../../..
-      dockerfile: app/images/jenkins-controller/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     image: mohamedhamdyamer/crauto-app-jenkins-controller:latest
     container_name: crauto-app-jenkins-controller
     hostname: crauto-app-jenkins-controller
     restart: on-failure
     environment:
-      - Jenkins_URL=http://192.168.1.211:8080/
-      - Docker_Host_URI=tcp://192.168.1.211:2375
+      - Jenkins_URL=
+      - Docker_Host_URI=
       - Dockerized_Jenkins_Agent_Image_Name=mohamedhamdyamer/crauto-app-jenkins-agent:latest
       - Repo_URL=https://github.com/mohamedhamdyamer/crauto
     ports:

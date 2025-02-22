@@ -66,21 +66,28 @@ pipeline {
             ansible-galaxy collection build
           '''
         }
-
-        sh '''
-          cp app/ansible/collection/galaxy.yml app/images/jenkins-agent
-          cp app/ansible/collection/*.tar.gz app/images/jenkins-agent
-          mv app/ansible/collection/*.tar.gz /tmp/artifactory/crauto/ansible/collections
-        '''
       }
     }
 
-    stage('copying groovy files ...') {
+    stage('copying the groovy scripts, to be used while building the Jenkins controller image ...') {
       steps {
         sh '''
           cp common/groovy/* app/images/jenkins-controller
         '''
       }
+    }
+
+    stage('copying galaxy.yml and the new collection, to be installed while building the Jenkins agent image ...') {
+      sh '''
+        cp app/ansible/collection/galaxy.yml app/images/jenkins-agent
+        cp app/ansible/collection/*.tar.gz app/images/jenkins-agent
+      '''
+    }
+
+    stage('moving the new collection to the Artifactory ...') {
+      sh '''
+        mv app/ansible/collection/*.tar.gz /tmp/artifactory/crauto/ansible/collections
+      '''
     }
   }
 }
