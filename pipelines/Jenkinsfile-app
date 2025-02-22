@@ -19,6 +19,7 @@ pipeline {
       steps {
         sh '''
           #!/bin/bash
+          ansible --version
           ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
         '''
       }
