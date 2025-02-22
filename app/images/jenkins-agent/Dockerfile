@@ -21,13 +21,12 @@ RUN echo "deb [signed-by=/usr/share/keyrings/ansible-archive-keyring.gpg] http:/
 RUN apt-get update
 RUN apt-get install --assume-yes ansible
 
-# Installing the Ansible collection ...
+# Switching back to user "jenkins" ...
 USER jenkins
+
+# Installing the Ansible collection ...
 COPY galaxy.yml .
 COPY *.tar.gz .
 RUN my_version=`cat galaxy.yml | grep -i version | awk '{print $2}'` && ansible-galaxy collection install crauto-crauto-$my_version.tar.gz
-
-# Switching back to user "jenkins" ...
-USER jenkins
 
 HEALTHCHECK NONE

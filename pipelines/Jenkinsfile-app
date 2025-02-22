@@ -4,13 +4,21 @@ pipeline {
   }
 
   stages {
-    stage('displaying info ...') {
+    stage('preparing and checking ...') {
       steps {
         sh '''
           #!/bin/bash
           mkdir /home/jenkins/.ssh
           echo "Host *" >> /home/jenkins/.ssh/config
           echo "StrictHostKeyChecking no" >> /home/jenkins/.ssh/config
+        '''
+      }
+    }
+
+    stage('displaying info ...') {
+      steps {
+        sh '''
+          #!/bin/bash
           ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
         '''
       }
@@ -18,21 +26,22 @@ pipeline {
 
     stage('create-sandbox') {
       steps {
-        sh '''
-          #!/bin/bash
-          cd /home/jenkins/crauto_mount/crs_main
-          ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
-        '''
+        dir{'/home/jenkins/crauto_mount/crs_main'}
+          sh '''
+            #!/bin/bash
+            #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
+          '''
       }
     }
 
     stage('recover-avamar') {
       steps {
-        sh '''
-          #!/bin/bash
-          cd /home/jenkins/crauto_mount/restore_rollback_avamar
-          ansible-playbook --inventory inventoryFile restore_ave.yml
-        '''
+        dir('/home/jenkins/crauto_mount/restore_rollback_avamar'){
+          sh '''
+            #!/bin/bash
+            #ansible-playbook --inventory inventoryFile restore_ave.yml
+          '''
+        }
       }
     }
   }
