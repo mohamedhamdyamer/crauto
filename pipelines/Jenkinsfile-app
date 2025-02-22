@@ -26,11 +26,12 @@ pipeline {
 
     stage('create-sandbox') {
       steps {
-        dir{'/home/jenkins/crauto_mount/crs_main'}
+        dir('/home/jenkins/crauto_mount/crs_main') {
           sh '''
             #!/bin/bash
             #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
           '''
+        }
       }
     }
 
