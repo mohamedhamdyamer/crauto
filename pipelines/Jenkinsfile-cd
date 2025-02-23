@@ -3,27 +3,35 @@ pipeline {
     dockerfile {
       label 'crauto-cicd'
       dir 'cicd/images/jenkins-agent'
-      args '--volume /home/amer/artifactory:/tmp/artifactory --volume /home/amer/deployments:/tmp/deployments'
+      args '--volume /home/ansible/artifactory:/tmp/artifactory --volume /home/ansible/deployments:/tmp/deployments'
     }
   }
 
   stages {
     stage('displaying info ...') {
       steps {
-        script {
-          def galaxyFile = readYaml(file: 'app/ansible/collection/galaxy.yml')
-          def version = ""
-          galaxyFile.each {
-            key, value ->
-              if (key == "version") {
-                version = value
-              }
-          }
-          println("Continuous Delivery - CD")
-          println("Version: " + version)
-          println("Build: ${BUILD_NUMBER}")
-          println("Full version: " + version + ".Build.${BUILD_NUMBER}")
-        }
+        // script {
+        //   def galaxyFile = readYaml(file: 'app/ansible/collection/galaxy.yml')
+        //   def version = ""
+        //   galaxyFile.each {
+        //     key, value ->
+        //       if (key == "version") {
+        //         version = value
+        //       }
+        //   }
+        //   println("Continuous Delivery - CD")
+        //   println("Version: " + version)
+        //   println("Build: ${BUILD_NUMBER}")
+        //   println("Full version: " + version + ".Build.${BUILD_NUMBER}")
+        // }
+        sh '''
+          #!/bin/bash
+          my_version=`cat app/ansible/collection/galaxy.yml | grep -i version | awk '{print $2}'`
+          echo "Continuous Delivery - CD"
+          echo "Version: $my_version"
+          echo "Build: $BUILD_NUMBER"
+          echo "Full version: $my_version.Build.$BUILD_NUMBER"
+        '''
       }
     }
 
@@ -36,15 +44,15 @@ pipeline {
       }
     }
 
-    stage('copying the latest Ansible collection ...') {
-      steps {
-        sh '''
-          #!/bin/bash
-          my_version=`cat app/ansible/collection/galaxy.yml | grep -i version | awk '{print $2}'`
-          cp /tmp/artifactory/crauto/ansible/collections/crauto-crauto-$my_version.tar.gz /tmp/deployments/crauto.DEPLOY.$BUILD_NUMBER
-        '''
-      }
-    }
+    // stage('copying the latest Ansible collection ...') {
+    //   steps {
+    //     sh '''
+    //       #!/bin/bash
+    //       my_version=`cat app/ansible/collection/galaxy.yml | grep -i version | awk '{print $2}'`
+    //       cp /tmp/artifactory/crauto/ansible/collections/crauto-crauto-$my_version.tar.gz /tmp/deployments/crauto.DEPLOY.$BUILD_NUMBER
+    //     '''
+    //   }
+    // }
   }
 }
 
@@ -67,8 +75,14 @@ node('crauto-cicd') {
   // The values, to update, are dependent on the environemt we deploy the app on (the docker host we are deplying the container to run on).
   stage('updating the environment variables of app/images/jenkins-controller/docker-compose.yml ...') {
     sh '''
-      sed -i 's/Jenkins_URL=/Jenkins_URL=http://192.168.1.214:8080/g' app/images/jenkins-controller/docker-compose.yml
-      sed -i 's/Docker_Host_URI=/Docker_Host_URI=tcp://192.168.1.214:2375/g' app/images/jenkins-controller/docker-compose.yml
+      Jenkins_URL=http://10.60.40.124:8080
+      Docker_Host_URI=tcp://10.60.40.124:2375
+
+      sed -i "s,Jenkins_URL=,Jenkins_URL=$Jenkins_URL,g" app/images/jenkins-controller/docker-compose.yml
+      cat app/images/jenkins-controller/docker-compose.yml
+
+      sed -i "s,Docker_Host_URI=,Docker_Host_URI=$Docker_Host_URI,g" app/images/jenkins-controller/docker-compose.yml
+      cat app/images/jenkins-controller/docker-compose.yml
     '''
   }
 
