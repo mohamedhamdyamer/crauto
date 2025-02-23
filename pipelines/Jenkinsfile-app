@@ -15,36 +15,42 @@ pipeline {
       }
     }
 
+    stage('displaying a Welcome message ...') {
+      steps {
+        sh '''
+          #!/bin/bash
+          /home/jenkins/.local/bin/ansible-playbook --inventory app/ansible/inventory/hosts.yml app/ansible/collection/test.yml
+        '''
+      }
+    }
+
     stage('displaying info ...') {
       steps {
         sh '''
           #!/bin/bash
-          ansible --version
-          ansible-playbook --inventory app/ansible/inventory/hosts.yml /home/jenkins/crauto_mount/test01.yml
+          /home/jenkins/.local/bin/ansible --version
         '''
       }
     }
 
     stage('create-sandbox') {
       steps {
-        dir('/home/jenkins/crauto_mount/crs_main') {
-          sh '''
-            #!/bin/bash
-            #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
-          '''
-        }
+        sh '''
+          #!/bin/bash
+          echo "creating a sandbox ..."
+          #ansible-playbook --inventory inventoryFile cyber_recovery_recover_app_with_full_copy_list_row.yml
+        '''
       }
     }
 
     stage('recover-avamar') {
       steps {
-        dir('/home/jenkins/crauto_mount/restore_rollback_avamar'){
-          sh '''
-            #!/bin/bash
-            ansible-playbook --inventory inventoryFile pre_restore_tasks.yml
-            #ansible-playbook --inventory inventoryFile restore_ave.yml
-          '''
-        }
+        sh '''
+          #!/bin/bash
+          echo "recovering Avamar ..."
+          #/home/jenkins/.local/bin/ansible-playbook --inventory inventoryFile pre_restore_tasks.yml
+          #ansible-playbook --inventory inventoryFile restore_ave.yml
+        '''
       }
     }
   }

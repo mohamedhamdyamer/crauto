@@ -1,9 +1,9 @@
 ---
-- name: Testing with a simple Ansible playbook ...
-  hosts: all
+- name: Printing a Welcome message ...
+  hosts: local
   gather_facts: false
 
   tasks:
-    - name: Printing a test message ...
+    - name: Printing a Welcome message ...
       ansible.builtin.debug:
-        msg: "This is a test message! ..."
+        msg: "Welcome to Cyber Recovery - RECOVERY AUTOMATION! ..."
